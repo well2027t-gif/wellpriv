@@ -44,6 +44,22 @@ const LINKS: LinkItem[] = [
     icon: "🎵",
     color: "from-gray-900 to-gray-700",
   },
+  {
+    id: "credits",
+    label: "Crédits",
+    description: "Conheça nossos créditos",
+    url: "#credits",
+    icon: "⭐",
+    color: "from-yellow-500 to-orange-500",
+  },
+  {
+    id: "x",
+    label: "X",
+    description: "Siga-nos no X (Twitter)",
+    url: "#x",
+    icon: "𝕏",
+    color: "from-gray-900 to-gray-800",
+  },
 ];
 
 export default function Home() {
@@ -134,6 +150,9 @@ export default function Home() {
           <div className="mt-16 text-center">
             <p className="font-body text-sm text-gray-500">
               Clique em qualquer link para acessar
+            </p>
+            <p className="font-body mt-2 text-xs text-gray-400">
+              {LINKS.length} links disponíveis
             </p>
           </div>
         </div>
