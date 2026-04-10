@@ -81,6 +81,11 @@ export default function Home() {
 
         {/* Conteúdo */}
         <div className="relative z-10 mx-auto max-w-2xl text-center">
+          {/* Nome Profissional */}
+          <p className="font-accent mb-6 text-sm tracking-widest text-orange-600 uppercase">
+            Welington R.
+          </p>
+
           {/* Logo/Título */}
           <div className="mb-8 inline-block">
             <div className="rounded-full bg-orange-100 p-4">
