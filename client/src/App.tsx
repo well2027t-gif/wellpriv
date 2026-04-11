@@ -8,9 +8,12 @@ import Home from "./pages/Home";
 
 
 function Router() {
+  const base = "/wellpriv";
   return (
     <Switch>
+      <Route path={base + "/"} component={Home} />
       <Route path={"/"} component={Home} />
+      <Route path={base + "/404"} component={NotFound} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

@@ -147,7 +147,7 @@ export default function Home() {
               />
               {/* Foto */}
               <div className="relative h-28 w-28 overflow-hidden rounded-full border-[3px] border-[#0a0a0a] sm:h-32 sm:w-32">
-                <img src="/profile.jpeg" alt="Welington R." className="h-full w-full object-cover" />
+                <img src="./profile.jpeg" alt="Welington R." className="h-full w-full object-cover" />
               </div>
             </div>
           </motion.div>
