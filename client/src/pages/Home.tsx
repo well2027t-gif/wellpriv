@@ -194,7 +194,7 @@ export default function Home() {
               transition: { duration: 0.3 },
             }}
             whileTap={{ scale: 0.97 }}
-            className="group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-[#FF6B35]/40 bg-gradient-to-br from-[#FF6B35]/[0.15] via-[#FF8C5A]/[0.08] to-[#FF6B35]/[0.03] px-6 py-7 backdrop-blur-sm transition-all duration-300 hover:border-[#FF6B35]/60"
+            className="group relative flex flex-col items-center gap-3 overflow-hidden rounded-3xl border border-[#FF6B35]/40 bg-gradient-to-br from-[#FF6B35]/[0.15] via-[#FF8C5A]/[0.08] to-[#FF6B35]/[0.03] px-6 py-6 backdrop-blur-sm transition-all duration-300 hover:border-[#FF6B35]/60"
           >
             {/* Shimmer */}
             <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#FF6B35]/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
@@ -227,11 +227,11 @@ export default function Home() {
             </motion.div>
 
             {/* Ícone grande + Título */}
-            <div className="relative flex w-full flex-col items-center gap-2 text-center">
+            <div className="relative flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] text-white shadow-lg shadow-[#FF6B35]/30">
                 <Lock className="h-6 w-6" />
               </div>
-              <div className="flex flex-col items-center gap-0.5">
+              <div>
                 <h3
                   className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-[#FF6B35]"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
@@ -246,7 +246,7 @@ export default function Home() {
 
             {/* Botão CTA */}
             <motion.div
-              className="relative mt-2 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-8 py-2 text-sm font-semibold text-white shadow-lg shadow-[#FF6B35]/25"
+              className="relative mt-1 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-8 py-2 text-sm font-semibold text-white shadow-lg shadow-[#FF6B35]/25"
               style={{ fontFamily: "'Poppins', sans-serif" }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
