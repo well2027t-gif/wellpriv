@@ -43,9 +43,7 @@
 }
 
 :root {
-  /* FitGym - Minimalismo Moderno com Foco em Movimento */
-  /* Paleta: Branco limpo + Laranja vibrante (#FF6B35) + Cinza sofisticado */
-  
+  /* Well Privacy - Elegância Escura com Acento Laranja */
   --primary: #FF6B35;
   --primary-foreground: #FFFFFF;
   --sidebar-primary: #FF6B35;
@@ -55,65 +53,37 @@
   --chart-3: #FFB380;
   --chart-4: #FFD4A8;
   --chart-5: #FFEAD0;
-  --radius: 0.5rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.2 0.01 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.01 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.01 0);
-  --secondary: oklch(0.96 0.002 0);
-  --secondary-foreground: oklch(0.3 0.01 0);
-  --muted: oklch(0.94 0.001 0);
-  --muted-foreground: oklch(0.5 0.01 0);
+  --radius: 0.75rem;
+  --background: #0a0a0a;
+  --foreground: #f5f5f5;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-foreground: #f5f5f5;
+  --popover: #141414;
+  --popover-foreground: #f5f5f5;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #a0a0a0;
+  --muted: #1a1a1a;
+  --muted-foreground: #666666;
   --accent: #FF6B35;
   --accent-foreground: #FFFFFF;
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.92 0.002 0);
-  --input: oklch(0.96 0.002 0);
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.06);
   --ring: #FF6B35;
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: oklch(0.2 0.01 0);
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #f5f5f5;
   --sidebar-accent: #FF6B35;
   --sidebar-accent-foreground: #FFFFFF;
-  --sidebar-border: oklch(0.92 0.002 0);
+  --sidebar-border: rgba(255, 255, 255, 0.06);
   --sidebar-ring: #FF6B35;
 }
 
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer base {
@@ -121,8 +91,10 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
+    background-color: #0a0a0a;
+    overflow-x: hidden;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -138,7 +110,7 @@
 }
 
 @layer components {
-  /* FitGym Typography System */
+  /* Typography System */
   .font-display {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
@@ -155,31 +127,14 @@
     font-weight: 600;
   }
 
-  /* Link Card Styles */
-  .link-card {
-    @apply relative overflow-hidden rounded-lg border border-border bg-card p-6 transition-all duration-300 ease-out;
-  }
-
-  .link-card:hover {
-    @apply scale-105 shadow-lg;
-  }
-
-  .link-card-icon {
-    @apply mb-4 h-12 w-12 transition-transform duration-300;
-  }
-
-  .link-card:hover .link-card-icon {
-    @apply rotate-180;
-  }
-
   /**
-   * Custom container utility that centers content and adds responsive padding.
+   * Custom container utility
    */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -190,16 +145,22 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
     }
   }
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(255, 107, 53, 0.3);
+  color: #ffffff;
 }
