@@ -9,19 +9,21 @@
 - [x] Todos os arquivos necessários no repositório
 
 ### Fase 2: Configuração do GitHub Pages
+- [x] Build dos arquivos concluído
+- [x] Branch `gh-pages` criada e enviada para o GitHub
 - [ ] Acessar Settings do repositório no GitHub
 - [ ] Ir em "Pages" (Páginas)
 - [ ] Selecionar "Deploy from a branch"
-- [ ] Escolher branch: `main`
-- [ ] Escolher pasta: `/root` (ou `/docs` se preferir)
+- [ ] Escolher branch: `gh-pages`
+- [ ] Escolher pasta: `/ (root)`
 - [ ] Salvar configurações
-- [ ] Aguardar o primeiro deploy automático
+- [ ] Aguardar o primeiro deploy automático (1-2 minutos)
 
-### Fase 3: Build e Deploy Manual (Alternativa)
-- [ ] Executar `pnpm install` localmente
-- [ ] Executar `pnpm build` para gerar arquivos em `dist/`
-- [ ] Criar branch `gh-pages` (se não existir)
-- [ ] Fazer push dos arquivos de `dist/` para a branch `gh-pages`
+### Fase 3: Build e Deploy Manual (Concluído)
+- [x] Executar `pnpm install` localmente
+- [x] Executar `pnpm build` para gerar arquivos em `dist/`
+- [x] Criar branch `gh-pages` (se não existir)
+- [x] Fazer push dos arquivos de `dist/` para a branch `gh-pages`
 - [ ] Configurar GitHub Pages para usar a branch `gh-pages`
 
 ### Fase 4: Validação e Publicação
