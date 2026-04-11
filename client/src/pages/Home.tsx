@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Instagram, Shield, Music, Twitter, Star, Lock } from "lucide-react";
+import { Instagram, Shield, Music, Twitter, Star, Lock, Send } from "lucide-react";
 import type { ReactNode } from "react";
 
 /**
@@ -41,6 +41,14 @@ const LINKS: LinkItem[] = [
     icon: <Twitter className="h-[18px] w-[18px]" />,
     gradient: "from-[#1DA1F2] to-[#0d8ecf]",
     hoverGlow: "rgba(29, 161, 242, 0.35)",
+  },
+  {
+    id: "telegram",
+    label: "Telegram",
+    url: "https://t.me/+HyviwhvL1v81OTAx",
+    icon: <Send className="h-[18px] w-[18px]" />,
+    gradient: "from-[#0088cc] to-[#00a8e8]",
+    hoverGlow: "rgba(0, 136, 204, 0.35)",
   },
 ];
 
