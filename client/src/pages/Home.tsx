@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Instagram, Shield, Music, Twitter, Star, Lock, Send } from "lucide-react";
+import { Star, Lock } from "lucide-react";
 import type { ReactNode } from "react";
 
 /**
@@ -17,40 +17,7 @@ interface LinkItem {
   hoverGlow: string;
 }
 
-const LINKS: LinkItem[] = [
-  {
-    id: "instagram",
-    label: "Instagram",
-    url: "https://www.instagram.com/wel.priv_?igsh=MWhyMjBsaWo4azhkYg==",
-    icon: <Instagram className="h-[18px] w-[18px]" />,
-    gradient: "from-[#E1306C] via-[#F77737] to-[#FCAF45]",
-    hoverGlow: "rgba(225, 48, 108, 0.35)",
-  },
-  {
-    id: "tiktok",
-    label: "TikTok",
-    url: "https://www.tiktok.com/@wel_ribeiro.gym?_r=1&_t=ZS-95RRaizm2qa",
-    icon: <Music className="h-[18px] w-[18px]" />,
-    gradient: "from-[#00f2ea] to-[#ff0050]",
-    hoverGlow: "rgba(0, 242, 234, 0.35)",
-  },
-  {
-    id: "x",
-    label: "X",
-    url: "https://x.com/wellprivado?s=21",
-    icon: <Twitter className="h-[18px] w-[18px]" />,
-    gradient: "from-[#1DA1F2] to-[#0d8ecf]",
-    hoverGlow: "rgba(29, 161, 242, 0.35)",
-  },
-  {
-    id: "telegram",
-    label: "Telegram",
-    url: "https://t.me/+HyviwhvL1v81OTAx",
-    icon: <Send className="h-[18px] w-[18px]" />,
-    gradient: "from-[#0088cc] to-[#00a8e8]",
-    hoverGlow: "rgba(0, 136, 204, 0.35)",
-  },
-];
+const LINKS: LinkItem[] = [];
 
 /* ── Floating Particles ── */
 function FloatingParticles() {
@@ -213,9 +180,9 @@ export default function Home() {
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
 
-            {/* Badge EXCLUSIVO */}
+            {/* Badge EXCLUSIVO - Posicionado no topo */}
             <motion.div
-              className="relative flex items-center gap-1.5 rounded-full bg-[#FF6B35]/25 px-3 py-1"
+              className="relative -mt-2 flex items-center gap-1.5 rounded-full bg-[#FF6B35]/25 px-3 py-1"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
