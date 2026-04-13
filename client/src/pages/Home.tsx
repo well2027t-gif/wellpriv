@@ -29,38 +29,23 @@ function useVisitCounter() {
   const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    // Verifica se já contabilizou nesta sessão (evita contar F5 duplo)
-    const sessionKey = "wellpriv_visited";
-    const alreadyCounted = sessionStorage.getItem(sessionKey);
-
-    if (!alreadyCounted) {
-      // Incrementa o contador global e obtém o novo valor
-      fetch(`${COUNTER_BASE}/up/`)
-        .then((r) => r.json())
-        .then((data) => {
-          if (data?.count !== undefined) {
-            setCount(data.count);
-            sessionStorage.setItem(sessionKey, "1");
-          }
-        })
-        .catch(() => {
-          // Fallback: busca o valor atual sem incrementar
-          fetch(`${COUNTER_BASE}/`)
-            .then((r) => r.json())
-            .then((data) => {
-              if (data?.count !== undefined) setCount(data.count);
-            })
-            .catch(() => setCount(null));
-        });
-    } else {
-      // Já contou nesta sessão, só exibe o valor atual
-      fetch(`${COUNTER_BASE}/`)
-        .then((r) => r.json())
-        .then((data) => {
-          if (data?.count !== undefined) setCount(data.count);
-        })
-        .catch(() => setCount(null));
-    }
+    // Sempre incrementa o contador a cada visita/atualização
+    fetch(`${COUNTER_BASE}/up`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.count !== undefined) {
+          setCount(data.count);
+        }
+      })
+      .catch(() => {
+        // Fallback: busca o valor atual sem incrementar
+        fetch(COUNTER_BASE)
+          .then((r) => r.json())
+          .then((data) => {
+            if (data?.count !== undefined) setCount(data.count);
+          })
+          .catch(() => setCount(null));
+      });
   }, []);
 
   return count;
