@@ -146,7 +146,38 @@ function VisitCounterBadge({ count }: { count: number | null }) {
 }
 
 /* ── Promo Card Melhorado ── */
+
+const PROMO_START_KEY = "wellpriv_promo_start";
+const PROMO_DURATION_MS = 24 * 60 * 60 * 1000; // 24 horas em ms
+
+function usePromoProgress() {
+  const [progress, setProgress] = useState<number>(0);
+
+  useEffect(() => {
+    // Obtém ou cria o timestamp de início
+    let startTime = Number(localStorage.getItem(PROMO_START_KEY));
+    if (!startTime || isNaN(startTime)) {
+      startTime = Date.now();
+      localStorage.setItem(PROMO_START_KEY, String(startTime));
+    }
+
+    const updateProgress = () => {
+      const elapsed = Date.now() - startTime;
+      const pct = Math.min((elapsed / PROMO_DURATION_MS) * 100, 100);
+      setProgress(Math.round(pct * 10) / 10); // 1 casa decimal
+    };
+
+    updateProgress();
+    // Atualiza a cada 30 segundos para refletir o progresso real
+    const interval = setInterval(updateProgress, 30_000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return progress;
+}
+
 function PromoCard() {
+  const progress = usePromoProgress();
   return (
     <motion.a
       href="https://privacy.com.br/@Wellribeiro"
@@ -247,26 +278,28 @@ function PromoCard() {
         </div>
 
         {/* Barra de progresso decorativa */}
-        <div className="relative mt-3 overflow-hidden rounded-full bg-white/[0.05] h-1">
-          <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A]"
-            initial={{ width: "0%" }}
-            animate={{ width: "72%" }}
-            transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
-          />
-          <motion.div
-            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
-            animate={{ translateX: ["-100%", "200%"] }}
-            transition={{ duration: 2, repeat: Infinity, delay: 2, ease: "easeInOut" }}
-          />
-        </div>
-        <div className="mt-1 flex items-center justify-between">
-          <span className="text-[9px] text-white/25" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Vagas preenchidas
-          </span>
-          <span className="text-[9px] font-semibold text-[#FF6B35]/70" style={{ fontFamily: "'Poppins', sans-serif" }}>
-            72%
-          </span>
+        <div className="mt-5 mb-1">
+          <div className="relative overflow-hidden rounded-full bg-white/[0.05] h-1">
+            <motion.div
+              className="h-full rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A]"
+              initial={{ width: "0%" }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            />
+            <motion.div
+              className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              animate={{ translateX: ["-100%", "200%"] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 2, ease: "easeInOut" }}
+            />
+          </div>
+          <div className="mt-1 flex items-center justify-between">
+            <span className="text-[9px] text-white/25" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Vagas preenchidas
+            </span>
+            <span className="text-[9px] font-semibold text-[#FF6B35]/70" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              {progress.toFixed(1)}%
+            </span>
+          </div>
         </div>
       </div>
     </motion.a>
