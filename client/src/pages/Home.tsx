@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
-import { Star, Lock } from "lucide-react";
-import type { ReactNode } from "react";
+import { Star, Lock, Eye, Flame, Gift } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
 
 /**
  * Welington R. - Link na Bio
  * Layout: 100dvh - tudo em uma tela
  * Foto grande, Privacy em destaque máximo, rodapé com direitos reservados
+ * Contador de visitas persistente via CounterAPI (global, todos os navegadores)
  */
 
 interface LinkItem {
@@ -18,6 +19,52 @@ interface LinkItem {
 }
 
 const LINKS: LinkItem[] = [];
+
+/* ── Contador de Visitas Global ── */
+const COUNTER_API_NAMESPACE = "wellpriv";
+const COUNTER_API_KEY = "visits";
+const COUNTER_BASE = `https://api.counterapi.dev/v1/${COUNTER_API_NAMESPACE}/${COUNTER_API_KEY}`;
+
+function useVisitCounter() {
+  const [count, setCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Verifica se já contabilizou nesta sessão (evita contar F5 duplo)
+    const sessionKey = "wellpriv_visited";
+    const alreadyCounted = sessionStorage.getItem(sessionKey);
+
+    if (!alreadyCounted) {
+      // Incrementa o contador global e obtém o novo valor
+      fetch(`${COUNTER_BASE}/up/`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data?.count !== undefined) {
+            setCount(data.count);
+            sessionStorage.setItem(sessionKey, "1");
+          }
+        })
+        .catch(() => {
+          // Fallback: busca o valor atual sem incrementar
+          fetch(`${COUNTER_BASE}/`)
+            .then((r) => r.json())
+            .then((data) => {
+              if (data?.count !== undefined) setCount(data.count);
+            })
+            .catch(() => setCount(null));
+        });
+    } else {
+      // Já contou nesta sessão, só exibe o valor atual
+      fetch(`${COUNTER_BASE}/`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data?.count !== undefined) setCount(data.count);
+        })
+        .catch(() => setCount(null));
+    }
+  }, []);
+
+  return count;
+}
 
 /* ── Floating Particles ── */
 function FloatingParticles() {
@@ -72,7 +119,163 @@ const cardVariants = {
   visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 };
 
+const promoCardVariants = {
+  hidden: { opacity: 0, y: 30, filter: "blur(12px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+};
+
+/* ── Visit Counter Badge ── */
+function VisitCounterBadge({ count }: { count: number | null }) {
+  return (
+    <motion.div
+      variants={textVariants}
+      className="flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 backdrop-blur-sm"
+    >
+      <Eye className="h-3 w-3 text-white/40" />
+      <span className="text-[10px] font-medium text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
+        {count === null ? (
+          <span className="animate-pulse">carregando...</span>
+        ) : (
+          <span>
+            <span className="font-bold text-white/60">{count.toLocaleString("pt-BR")}</span> visualizações
+          </span>
+        )}
+      </span>
+    </motion.div>
+  );
+}
+
+/* ── Promo Card Melhorado ── */
+function PromoCard() {
+  return (
+    <motion.a
+      href="https://privacy.com.br/@Wellribeiro"
+      target="_blank"
+      rel="noopener noreferrer"
+      variants={promoCardVariants}
+      whileHover={{
+        scale: 1.02,
+        transition: { duration: 0.25 },
+      }}
+      whileTap={{ scale: 0.97 }}
+      className="group relative w-full overflow-hidden rounded-2xl border border-[#FF6B35]/30 bg-gradient-to-br from-[#1a0a00] via-[#150800] to-[#0a0a0a] p-[1px]"
+      style={{ boxShadow: "0 0 40px rgba(255, 107, 53, 0.12), inset 0 0 40px rgba(255, 107, 53, 0.03)" }}
+    >
+      {/* Borda gradiente animada */}
+      <motion.div
+        className="absolute inset-0 rounded-2xl"
+        style={{
+          background: "linear-gradient(135deg, rgba(255,107,53,0.5) 0%, transparent 40%, transparent 60%, rgba(255,140,90,0.4) 100%)",
+        }}
+        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Conteúdo interno */}
+      <div className="relative rounded-2xl bg-gradient-to-br from-[#1c0d02] via-[#130800] to-[#0d0d0d] px-4 py-4">
+        {/* Shimmer */}
+        <div className="absolute inset-0 -translate-x-full rounded-2xl bg-gradient-to-r from-transparent via-[#FF6B35]/[0.07] to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+
+        {/* Glow de fundo */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl"
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,107,53,0.12) 0%, transparent 70%)" }}
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        />
+
+        {/* Linha decorativa topo */}
+        <motion.div
+          className="absolute left-8 right-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#FF6B35]/60 to-transparent"
+          animate={{ opacity: [0.4, 0.9, 0.4] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+
+        <div className="relative flex items-center gap-3">
+          {/* Ícone com badge de fogo */}
+          <div className="relative flex-shrink-0">
+            <motion.div
+              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF6B35] via-[#FF7A45] to-[#FF8C5A] shadow-lg"
+              style={{ boxShadow: "0 4px 20px rgba(255, 107, 53, 0.4)" }}
+              animate={{ boxShadow: ["0 4px 20px rgba(255,107,53,0.4)", "0 4px 30px rgba(255,107,53,0.65)", "0 4px 20px rgba(255,107,53,0.4)"] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Gift className="h-5 w-5 text-white" />
+            </motion.div>
+            {/* Badge de fogo */}
+            <motion.div
+              className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#FF6B35]"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              <Flame className="h-2.5 w-2.5 text-white" />
+            </motion.div>
+          </div>
+
+          {/* Texto */}
+          <div className="flex flex-1 flex-col gap-0.5">
+            <div className="flex items-center gap-2">
+              <span
+                className="text-sm font-bold text-white transition-colors duration-300 group-hover:text-[#FF8C5A]"
+                style={{ fontFamily: "'Poppins', sans-serif" }}
+              >
+                Promoção Especial
+              </span>
+              <motion.span
+                className="rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white"
+                animate={{ opacity: [0.8, 1, 0.8] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                Limitado
+              </motion.span>
+            </div>
+            <p className="text-[11px] leading-tight text-white/45" style={{ fontFamily: "'Inter', sans-serif" }}>
+              Acesse conteúdo exclusivo com desconto especial
+            </p>
+          </div>
+
+          {/* Seta animada */}
+          <motion.div
+            className="flex-shrink-0 text-[#FF6B35]/60 transition-colors duration-300 group-hover:text-[#FF6B35]"
+            animate={{ x: [0, 3, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.div>
+        </div>
+
+        {/* Barra de progresso decorativa */}
+        <div className="relative mt-3 overflow-hidden rounded-full bg-white/[0.05] h-1">
+          <motion.div
+            className="h-full rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A]"
+            initial={{ width: "0%" }}
+            animate={{ width: "72%" }}
+            transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+          />
+          <motion.div
+            className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            animate={{ translateX: ["-100%", "200%"] }}
+            transition={{ duration: 2, repeat: Infinity, delay: 2, ease: "easeInOut" }}
+          />
+        </div>
+        <div className="mt-1 flex items-center justify-between">
+          <span className="text-[9px] text-white/25" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Vagas preenchidas
+          </span>
+          <span className="text-[9px] font-semibold text-[#FF6B35]/70" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            72%
+          </span>
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
 export default function Home() {
+  const visitCount = useVisitCounter();
+
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-[#0a0a0a]">
       {/* Background Glows */}
@@ -144,10 +347,15 @@ export default function Home() {
           >
             Fitness &bull; Lifestyle &bull; Conteúdo
           </motion.p>
+
+          {/* Contador de visitas */}
+          <div className="mt-2">
+            <VisitCounterBadge count={visitCount} />
+          </div>
         </div>
 
         {/* ── MEIO: Privacy GRANDE + Links ── */}
-        <div className="flex w-full flex-1 flex-col justify-start gap-2.5 pt-6">
+        <div className="flex w-full flex-1 flex-col justify-start gap-2.5 pt-5">
 
           {/* PRIVACY - Card GRANDE e chamativo */}
           <motion.a
@@ -227,6 +435,9 @@ export default function Home() {
             variants={textVariants}
             className="mx-auto h-[1px] w-10 bg-gradient-to-r from-transparent via-white/10 to-transparent"
           />
+
+          {/* Card de Promoção Melhorado */}
+          <PromoCard />
 
           {/* Outros links - compactos */}
           {LINKS.map((link, index) => (
