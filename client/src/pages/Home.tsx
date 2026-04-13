@@ -66,6 +66,28 @@ function useVisitCounter() {
   return count;
 }
 
+/* ── Cronômetro 24 horas ── */
+function useCountdown24h() {
+  const [timeLeft, setTimeLeft] = useState<string>("24:00:00");
+  useEffect(() => {
+    const updateCountdown = () => {
+      const now = new Date();
+      const tomorrow = new Date(now);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(0, 0, 0, 0);
+      const diff = tomorrow.getTime() - now.getTime();
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setTimeLeft(`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`);
+    };
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return timeLeft;
+}
+
 /* ── Floating Particles ── */
 function FloatingParticles() {
   const particles = Array.from({ length: 12 }, (_, i) => ({
@@ -163,8 +185,10 @@ function usePromoProgress() {
 
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
-      const pct = Math.min((elapsed / PROMO_DURATION_MS) * 100, 100);
-      setProgress(Math.round(pct * 10) / 10); // 1 casa decimal
+      // Inicia em 12% e vai até 100% ao longo de 24h
+      const rawPct = Math.min((elapsed / PROMO_DURATION_MS) * 100, 100);
+      const pct = 12 + (rawPct / 100) * 88; // mapeia 0-100% para 12-100%
+      setProgress(Math.min(Math.round(pct * 10) / 10, 100));
     };
 
     updateProgress();
@@ -178,6 +202,7 @@ function usePromoProgress() {
 
 function PromoCard() {
   const progress = usePromoProgress();
+  const timeLeft = useCountdown24h();
   return (
     <motion.a
       href="https://privacy.com.br/@Wellribeiro"
@@ -260,8 +285,10 @@ function PromoCard() {
                 Limitado
               </motion.span>
             </div>
-            <p className="text-[11px] leading-tight text-white/45" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Acesse conteúdo exclusivo com desconto especial
+            <p className="text-[13px] leading-tight font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <span className="text-green-300 text-[15px] drop-shadow-lg">40% DE DESCONTO</span>
+              <br />
+              <span className="text-white/60 text-[11px] font-normal">na assinatura</span>
             </p>
           </div>
 
@@ -277,28 +304,38 @@ function PromoCard() {
           </motion.div>
         </div>
 
-        {/* Barra de progresso decorativa */}
-        <div className="mt-5 mb-1">
-          <div className="relative overflow-hidden rounded-full bg-white/[0.05] h-1">
+        {/* Cronômetro 24h */}
+        <div className="relative mt-3 flex items-center justify-between rounded-lg bg-white/[0.05] px-3 py-2">
+          <span className="text-[10px] font-semibold text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Oferta expira em:
+          </span>
+          <motion.span
+            className="font-mono text-sm font-bold text-[#FF6B35]"
+            style={{ fontFamily: "'Poppins', sans-serif" }}
+            animate={{ opacity: [0.8, 1, 0.8] }}
+            transition={{ duration: 1, repeat: Infinity }}
+          >
+            {timeLeft}
+          </motion.span>
+        </div>
+
+        {/* Barra de Assinaturas - enchendo em 24h */}
+        <div className="relative mt-1.5 rounded-lg bg-white/[0.05] px-3 py-2">
+          <span className="text-[10px] font-semibold text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Assinaturas
+          </span>
+          <div className="relative mt-1.5 overflow-hidden rounded-full bg-white/[0.08] h-2">
             <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A]"
-              initial={{ width: "0%" }}
+              className="h-full rounded-full bg-gradient-to-r from-green-400 via-green-500 to-green-400"
+              initial={{ width: "12%" }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             />
             <motion.div
-              className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              className="absolute inset-0 -translate-x-full rounded-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
               animate={{ translateX: ["-100%", "200%"] }}
-              transition={{ duration: 2, repeat: Infinity, delay: 2, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
-          </div>
-          <div className="mt-1 flex items-center justify-between">
-            <span className="text-[9px] text-white/25" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Vagas preenchidas
-            </span>
-            <span className="text-[9px] font-semibold text-[#FF6B35]/70" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              {progress.toFixed(1)}%
-            </span>
           </div>
         </div>
       </div>
@@ -424,8 +461,6 @@ export default function Home() {
             {/* Badge EXCLUSIVO - Posicionado no topo */}
             <motion.div
               className="relative -mt-2 flex items-center gap-1.5 rounded-full bg-[#FF6B35]/25 px-3 py-1"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
               <Star className="h-3.5 w-3.5 fill-[#FF6B35] text-[#FF6B35]" />
               <span className="text-[11px] font-bold tracking-wider text-[#FF6B35]" style={{ fontFamily: "'Poppins', sans-serif" }}>
@@ -454,9 +489,18 @@ export default function Home() {
 
             {/* Botão CTA */}
             <motion.div
-              className="relative mt-2 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-8 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#FF6B35]/25"
+              className="relative mt-2 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-8 py-2.5 text-sm font-semibold text-white shadow-lg"
               style={{ fontFamily: "'Poppins', sans-serif" }}
-              whileHover={{ scale: 1.05 }}
+              animate={{
+                scale: [1, 1.08, 1],
+                boxShadow: [
+                  "0 0 20px rgba(255, 107, 53, 0.5)",
+                  "0 0 40px rgba(255, 107, 53, 0.8)",
+                  "0 0 20px rgba(255, 107, 53, 0.5)",
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              whileHover={{ scale: 1.12 }}
               whileTap={{ scale: 0.95 }}
             >
               Acessar Privacy
