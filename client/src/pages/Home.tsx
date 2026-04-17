@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import { Star, Lock, Eye, Flame, Gift, Send, Shield, Zap, Heart } from "lucide-react";
+import { Send, Shield, Zap, Heart, Lock } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 /**
- * Well Privé - Novo Layout Moderno e Elegante
- * Design premium com animações suaves e experiência visual aprimorada
+ * Well Privé - Layout Limpo e Profissional
+ * Foco em Welington R., Telegram VIP e Informações de Pagamento
  */
 
 interface LinkItem {
@@ -47,7 +47,7 @@ function useVisitCounter() {
   return count;
 }
 
-/* ── Floating Particles Melhorados ── */
+/* ── Floating Particles ── */
 function FloatingParticles() {
   const particles = Array.from({ length: 20 }, (_, i) => ({
     id: i,
@@ -110,28 +110,6 @@ const telegramVariants = {
   visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
-/* ── Visit Counter Badge Premium ── */
-function VisitCounterBadge({ count }: { count: number | null }) {
-  return (
-    <motion.div
-      variants={textVariants}
-      className="flex items-center gap-2 rounded-full border border-[#FF6B35]/20 bg-gradient-to-r from-[#FF6B35]/10 to-[#FF8C5A]/5 px-4 py-2 backdrop-blur-xl shadow-lg"
-      style={{ boxShadow: "0 8px 32px rgba(255, 107, 53, 0.15)" }}
-    >
-      <Eye className="h-4 w-4 text-[#FF6B35]" />
-      <span className="text-xs font-semibold text-white/80" style={{ fontFamily: "'Inter', sans-serif" }}>
-        {count === null ? (
-          <span className="animate-pulse">carregando...</span>
-        ) : (
-          <span>
-            <span className="font-bold text-[#FF6B35]">{count.toLocaleString("pt-BR")}</span> visualizações
-          </span>
-        )}
-      </span>
-    </motion.div>
-  );
-}
-
 /* ── Componente Principal ── */
 export default function Home() {
   const count = useVisitCounter();
@@ -154,47 +132,52 @@ export default function Home() {
         className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-8 sm:px-6 lg:px-8"
       >
         <div className="w-full max-w-md space-y-8">
-          {/* Profile Section */}
+          {/* Profile Section - FOTO DESTACADA */}
           <div className="flex flex-col items-center gap-6">
-            {/* Avatar */}
+            {/* Avatar - GRANDE E DESTACADO */}
             <motion.div
               variants={profileVariants}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] rounded-3xl blur-2xl opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] rounded-3xl blur-3xl opacity-60" />
               <img
                 src="/profile.jpeg"
-                alt="Welington Ribeiro"
-                className="relative h-32 w-32 rounded-3xl object-cover border-2 border-[#FF6B35]/50 shadow-2xl"
+                alt="Welington R."
+                className="relative h-40 w-40 rounded-3xl object-cover border-4 border-[#FF6B35] shadow-2xl"
               />
             </motion.div>
 
-            {/* Nome e Título */}
+            {/* Nome e Descrição */}
             <motion.div variants={textVariants} className="text-center space-y-2">
-              <h1 className="text-4xl font-bold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Welington Ribeiro
+              <h1 className="text-5xl font-bold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Welington R.
               </h1>
-              <p className="text-lg text-[#FF6B35] font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Privacy Advocate
+              <p className="text-lg text-white/70 font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Fitness • Lifestyle • Conteúdo
               </p>
             </motion.div>
 
-            {/* Descrição */}
-            <motion.p
+            {/* Contador de Visitas */}
+            <motion.div
               variants={textVariants}
-              className="text-center text-white/70 text-sm leading-relaxed max-w-sm"
-              style={{ fontFamily: "'Inter', sans-serif" }}
+              className="flex items-center gap-2 rounded-full border border-[#FF6B35]/20 bg-gradient-to-r from-[#FF6B35]/10 to-[#FF8C5A]/5 px-4 py-2 backdrop-blur-xl shadow-lg"
+              style={{ boxShadow: "0 8px 32px rgba(255, 107, 53, 0.15)" }}
             >
-              Especialista em privacidade digital e proteção de dados. Ajudando pessoas a recuperar o controle sobre suas informações pessoais.
-            </motion.p>
-
-            {/* Visit Counter */}
-            <VisitCounterBadge count={count} />
+              <span className="text-xs font-semibold text-white/80" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {count === null ? (
+                  <span className="animate-pulse">carregando...</span>
+                ) : (
+                  <span>
+                    👁️ <span className="font-bold text-[#FF6B35]">{count.toLocaleString("pt-BR")}</span> visualizações
+                  </span>
+                )}
+              </span>
+            </motion.div>
           </div>
 
           {/* Links Section */}
           <motion.div variants={cardVariants} className="space-y-3">
-            {/* TELEGRAM VIP - Card GRANDE e chamativo */}
+            {/* TELEGRAM VIP - Card PRINCIPAL */}
             <motion.a
               href="https://t.me/welvip_bot"
               target="_blank"
@@ -222,7 +205,7 @@ export default function Home() {
                 animate={{ opacity: [0.4, 0.8, 0.4] }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
-              {/* Badge VIP - Posicionado no topo */}
+              {/* Badge VIP */}
               <motion.div
                 className="relative -mt-2 flex items-center gap-1.5 rounded-full bg-[#0088CC]/25 px-3 py-1"
               >
@@ -329,7 +312,7 @@ export default function Home() {
           {/* CTA Section */}
           <motion.div variants={textVariants} className="space-y-3">
             <motion.a
-              href="https://privacy.com.br/@Wellribeiro"
+              href="https://t.me/welvip_bot"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -338,27 +321,14 @@ export default function Home() {
             >
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               <Shield className="h-5 w-5" />
-              <span style={{ fontFamily: "'Poppins', sans-serif" }}>Proteja Sua Privacidade</span>
-            </motion.a>
-
-            <motion.a
-              href="https://privacy.com.br/@Wellribeiro"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative flex items-center justify-center gap-2 w-full overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.05] px-6 py-3 font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.08]"
-            >
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-              <Zap className="h-5 w-5" />
-              <span style={{ fontFamily: "'Poppins', sans-serif" }}>Saiba Mais</span>
+              <span style={{ fontFamily: "'Poppins', sans-serif" }}>Acessar Grupo VIP</span>
             </motion.a>
           </motion.div>
 
           {/* Social Links */}
           <motion.div variants={textVariants} className="flex justify-center gap-4">
             <motion.a
-              href="https://privacy.com.br/@Wellribeiro"
+              href="https://t.me/welvip_bot"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.15, rotate: 10 }}
@@ -368,7 +338,7 @@ export default function Home() {
               <Heart className="h-5 w-5" />
             </motion.a>
             <motion.a
-              href="https://privacy.com.br/@Wellribeiro"
+              href="https://t.me/welvip_bot"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.15, rotate: -10 }}
@@ -379,17 +349,26 @@ export default function Home() {
             </motion.a>
           </motion.div>
 
-          {/* Rodapé com Instruções de Pagamento */}
-          <motion.div variants={textVariants} className="text-center space-y-2">
-            <p className="text-xs text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Para ter acesso ao grupo, realize o pagamento de <span className="font-bold text-[#FF6B35]">R$ 10</span> via Pix.
-            </p>
-            <p className="text-xs text-white/50" style={{ fontFamily: "'Inter', sans-serif" }}>
-              Após a confirmação, o acesso é liberado automaticamente.
-            </p>
-            <p className="text-[9px] text-white/20 tracking-widest uppercase pt-2" style={{ fontFamily: "'Inter', sans-serif" }}>
-              &copy; 2025 Welington Ribeiro. Todos os direitos reservados.
-            </p>
+          {/* Rodapé com Informações de Pagamento - MUITO DESTACADO */}
+          <motion.div variants={textVariants} className="space-y-4 rounded-2xl border-2 border-[#FF6B35]/50 bg-gradient-to-br from-[#FF6B35]/10 to-[#FF8C5A]/5 p-6 backdrop-blur-xl">
+            <div className="text-center space-y-3">
+              <p className="text-sm text-white/80" style={{ fontFamily: "'Inter', sans-serif" }}>
+                Para ter acesso ao grupo:
+              </p>
+              <div className="bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] rounded-xl p-4">
+                <p className="text-2xl font-bold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                  R$ 10 via Pix
+                </p>
+              </div>
+              <p className="text-xs text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
+                ✅ Após confirmação, acesso liberado automaticamente
+              </p>
+            </div>
+            <div className="border-t border-white/10 pt-3">
+              <p className="text-[9px] text-white/30 text-center tracking-widest uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
+                &copy; 2025 Welington R. Todos os direitos reservados.
+              </p>
+            </div>
           </motion.div>
         </div>
       </motion.div>
