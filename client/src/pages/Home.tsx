@@ -1,12 +1,10 @@
 import { motion } from "framer-motion";
-import { Star, Lock, Eye, Flame, Gift, Send } from "lucide-react";
+import { Star, Lock, Eye, Flame, Gift, Send, Shield, Zap, Heart } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 /**
- * Welington R. - Link na Bio
- * Layout: 100dvh - tudo em uma tela
- * Foto grande, Privacy em destaque máximo, rodapé com direitos reservados
- * Contador de visitas persistente via CounterAPI (global, todos os navegadores)
+ * Well Privé - Novo Layout Moderno e Elegante
+ * Design premium com animações suaves e experiência visual aprimorada
  */
 
 interface LinkItem {
@@ -29,7 +27,6 @@ function useVisitCounter() {
   const [count, setCount] = useState<number | null>(null);
 
   useEffect(() => {
-    // Sempre incrementa o contador a cada visita/atualização
     fetch(`${COUNTER_BASE}/up`)
       .then((r) => r.json())
       .then((data) => {
@@ -38,7 +35,6 @@ function useVisitCounter() {
         }
       })
       .catch(() => {
-        // Fallback: busca o valor atual sem incrementar
         fetch(COUNTER_BASE)
           .then((r) => r.json())
           .then((data) => {
@@ -73,14 +69,14 @@ function useCountdown24h() {
   return timeLeft;
 }
 
-/* ── Floating Particles ── */
+/* ── Floating Particles Melhorados ── */
 function FloatingParticles() {
-  const particles = Array.from({ length: 12 }, (_, i) => ({
+  const particles = Array.from({ length: 20 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    size: Math.random() * 2.5 + 0.5,
-    duration: Math.random() * 15 + 10,
+    size: Math.random() * 3 + 0.5,
+    duration: Math.random() * 20 + 15,
     delay: Math.random() * 5,
   }));
 
@@ -89,10 +85,10 @@ function FloatingParticles() {
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-[#FF6B35]"
+          className="absolute rounded-full bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A]"
           style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.4, 0], y: [0, -50, -100], x: [0, Math.random() * 20 - 10] }}
+          animate={{ opacity: [0, 0.5, 0.2, 0], y: [0, -80, -150], x: [0, Math.random() * 30 - 15] }}
           transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
@@ -100,51 +96,57 @@ function FloatingParticles() {
   );
 }
 
+/* ── Animated Background Grid ── */
+function AnimatedBackgroundGrid() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,107,53,0.03)_25%,rgba(255,107,53,0.03)_50%,transparent_50%,transparent_75%,rgba(255,107,53,0.03)_75%,rgba(255,107,53,0.03))] bg-[length:60px_60px] animate-pulse" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(255,107,53,0.05)]" />
+    </div>
+  );
+}
+
 /* ── Variants ── */
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
 };
 
 const profileVariants = {
-  hidden: { opacity: 0, scale: 0.5, filter: "blur(20px)" },
-  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, scale: 0.3, filter: "blur(30px)" },
+  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const textVariants = {
-  hidden: { opacity: 0, y: 20, filter: "blur(8px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
-
-const telegramVariants = {
-  hidden: { opacity: 0, scale: 0.85, filter: "blur(14px)" },
-  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, x: -30, filter: "blur(10px)" },
-  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, x: -40, filter: "blur(15px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const promoCardVariants = {
-  hidden: { opacity: 0, y: 30, filter: "blur(12px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 40, filter: "blur(15px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
 };
 
-/* ── Visit Counter Badge ── */
+/* ── Visit Counter Badge Premium ── */
 function VisitCounterBadge({ count }: { count: number | null }) {
   return (
     <motion.div
       variants={textVariants}
-      className="flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 backdrop-blur-sm"
+      className="flex items-center gap-2 rounded-full border border-[#FF6B35]/20 bg-gradient-to-r from-[#FF6B35]/10 to-[#FF8C5A]/5 px-4 py-2 backdrop-blur-xl shadow-lg"
+      style={{ boxShadow: "0 8px 32px rgba(255, 107, 53, 0.15)" }}
     >
-      <Eye className="h-3 w-3 text-white/40" />
-      <span className="text-[10px] font-medium text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
+      <Eye className="h-4 w-4 text-[#FF6B35]" />
+      <span className="text-xs font-semibold text-white/80" style={{ fontFamily: "'Inter', sans-serif" }}>
         {count === null ? (
           <span className="animate-pulse">carregando...</span>
         ) : (
           <span>
-            <span className="font-bold text-white/60">{count.toLocaleString("pt-BR")}</span> visualizações
+            <span className="font-bold text-[#FF6B35]">{count.toLocaleString("pt-BR")}</span> visualizações
           </span>
         )}
       </span>
@@ -152,16 +154,14 @@ function VisitCounterBadge({ count }: { count: number | null }) {
   );
 }
 
-/* ── Promo Card Melhorado ── */
-
+/* ── Promo Card Premium ── */
 const PROMO_START_KEY = "wellpriv_promo_start";
-const PROMO_DURATION_MS = 24 * 60 * 60 * 1000; // 24 horas em ms
+const PROMO_DURATION_MS = 24 * 60 * 60 * 1000;
 
 function usePromoProgress() {
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
-    // Obtém ou cria o timestamp de início
     let startTime = Number(localStorage.getItem(PROMO_START_KEY));
     if (!startTime || isNaN(startTime)) {
       startTime = Date.now();
@@ -170,14 +170,12 @@ function usePromoProgress() {
 
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
-      // Inicia em 12% e vai até 100% ao longo de 24h
       const rawPct = Math.min((elapsed / PROMO_DURATION_MS) * 100, 100);
-      const pct = 12 + (rawPct / 100) * 88; // mapeia 0-100% para 12-100%
+      const pct = 12 + (rawPct / 100) * 88;
       setProgress(Math.min(Math.round(pct * 10) / 10, 100));
     };
 
     updateProgress();
-    // Atualiza a cada 30 segundos para refletir o progresso real
     const interval = setInterval(updateProgress, 30_000);
     return () => clearInterval(interval);
   }, []);
@@ -195,367 +193,304 @@ function PromoCard() {
       rel="noopener noreferrer"
       variants={promoCardVariants}
       whileHover={{
-        scale: 1.02,
-        transition: { duration: 0.25 },
+        scale: 1.03,
+        transition: { duration: 0.3 },
       }}
-      whileTap={{ scale: 0.97 }}
-      className="group relative w-full overflow-hidden rounded-2xl border border-[#FF6B35]/30 bg-gradient-to-br from-[#1a0a00] via-[#150800] to-[#0a0a0a] p-[1px]"
-      style={{ boxShadow: "0 0 40px rgba(255, 107, 53, 0.12), inset 0 0 40px rgba(255, 107, 53, 0.03)" }}
+      whileTap={{ scale: 0.96 }}
+      className="group relative w-full overflow-hidden rounded-2xl border border-[#FF6B35]/40 bg-gradient-to-br from-[#1a0a00] via-[#150800] to-[#0a0a0a] p-[2px]"
+      style={{ boxShadow: "0 0 60px rgba(255, 107, 53, 0.2), inset 0 0 60px rgba(255, 107, 53, 0.05)" }}
     >
       {/* Borda gradiente animada */}
       <motion.div
         className="absolute inset-0 rounded-2xl"
         style={{
-          background: "linear-gradient(135deg, rgba(255,107,53,0.5) 0%, transparent 40%, transparent 60%, rgba(255,140,90,0.4) 100%)",
+          background: "linear-gradient(135deg, rgba(255,107,53,0.6) 0%, transparent 40%, transparent 60%, rgba(255,140,90,0.5) 100%)",
         }}
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        animate={{ opacity: [0.4, 0.7, 0.4] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
       />
 
       {/* Conteúdo interno */}
-      <div className="relative rounded-2xl bg-gradient-to-br from-[#1c0d02] via-[#130800] to-[#0d0d0d] px-4 py-4">
+      <div className="relative rounded-2xl bg-gradient-to-br from-[#1c0d02] via-[#130800] to-[#0d0d0d] px-5 py-5">
         {/* Shimmer */}
-        <div className="absolute inset-0 -translate-x-full rounded-2xl bg-gradient-to-r from-transparent via-[#FF6B35]/[0.07] to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
+        <div className="absolute inset-0 -translate-x-full rounded-2xl bg-gradient-to-r from-transparent via-[#FF6B35]/[0.1] to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
 
         {/* Glow de fundo */}
         <motion.div
           className="absolute inset-0 rounded-2xl"
-          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,107,53,0.12) 0%, transparent 70%)" }}
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,107,53,0.15) 0%, transparent 70%)" }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
 
         {/* Linha decorativa topo */}
         <motion.div
-          className="absolute left-8 right-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#FF6B35]/60 to-transparent"
-          animate={{ opacity: [0.4, 0.9, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute left-8 right-8 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#FF6B35]/70 to-transparent"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2.5, repeat: Infinity }}
         />
 
-        <div className="relative flex items-center gap-3">
+        <div className="relative flex items-center gap-4">
           {/* Ícone com badge de fogo */}
           <div className="relative flex-shrink-0">
             <motion.div
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF6B35] via-[#FF7A45] to-[#FF8C5A] shadow-lg"
-              style={{ boxShadow: "0 4px 20px rgba(255, 107, 53, 0.4)" }}
-              animate={{ boxShadow: ["0 4px 20px rgba(255,107,53,0.4)", "0 4px 30px rgba(255,107,53,0.65)", "0 4px 20px rgba(255,107,53,0.4)"] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-[#FF6B35] via-[#FF7A45] to-[#FF8C5A] shadow-2xl"
+              style={{ boxShadow: "0 8px 30px rgba(255, 107, 53, 0.5)" }}
+              animate={{ boxShadow: ["0 8px 30px rgba(255,107,53,0.5)", "0 8px 50px rgba(255,107,53,0.8)", "0 8px 30px rgba(255,107,53,0.5)"] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             >
-              <Gift className="h-5 w-5 text-white" />
+              <Gift className="h-6 w-6 text-white" />
             </motion.div>
             {/* Badge de fogo */}
             <motion.div
-              className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#FF6B35]"
-              animate={{ scale: [1, 1.2, 1] }}
+              className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] shadow-lg"
+              animate={{ scale: [1, 1.3, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
-              <Flame className="h-2.5 w-2.5 text-white" />
+              <Flame className="h-3 w-3 text-white" />
             </motion.div>
           </div>
 
           {/* Texto */}
-          <div className="flex flex-1 flex-col gap-0.5">
+          <div className="flex flex-1 flex-col gap-1">
             <div className="flex items-center gap-2">
               <span
-                className="text-sm font-bold text-white transition-colors duration-300 group-hover:text-[#FF8C5A]"
+                className="text-base font-bold text-white transition-colors duration-300 group-hover:text-[#FF8C5A]"
                 style={{ fontFamily: "'Poppins', sans-serif" }}
               >
                 Promoção Especial
               </span>
               <motion.span
-                className="rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white"
+                className="rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-lg"
                 animate={{ opacity: [0.8, 1, 0.8] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
                 Limitado
               </motion.span>
             </div>
-            <p className="text-[13px] leading-tight font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-              <span className="text-green-300 text-[15px] drop-shadow-lg">40% DE DESCONTO</span>
-              <br />
-              <span className="text-white/60 text-[11px] font-normal">na assinatura</span>
+            <p className="text-sm leading-tight font-bold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+              <span className="text-green-300">+50% OFF</span> em planos anuais
             </p>
           </div>
 
-          {/* Seta animada */}
+          {/* Seta */}
           <motion.div
-            className="flex-shrink-0 text-[#FF6B35]/60 transition-colors duration-300 group-hover:text-[#FF6B35]"
-            animate={{ x: [0, 3, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ x: [0, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-[#FF6B35]"
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
+            <Send className="h-5 w-5" />
           </motion.div>
         </div>
 
-        {/* Cronômetro 24h */}
-        <div className="relative mt-3 flex items-center justify-between rounded-lg bg-white/[0.05] px-3 py-2">
-          <span className="text-[10px] font-semibold text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Oferta expira em:
-          </span>
-          <motion.span
-            className="font-mono text-sm font-bold text-[#FF6B35]"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
-            animate={{ opacity: [0.8, 1, 0.8] }}
-            transition={{ duration: 1, repeat: Infinity }}
-          >
-            {timeLeft}
-          </motion.span>
+        {/* Progress bar */}
+        <div className="relative mt-4 h-1.5 overflow-hidden rounded-full bg-white/10">
+          <motion.div
+            className="h-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A]"
+            initial={{ width: "12%" }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.5 }}
+            style={{ boxShadow: "0 0 20px rgba(255, 107, 53, 0.6)" }}
+          />
         </div>
 
-        {/* Barra de Assinaturas - enchendo em 24h */}
-        <div className="relative mt-1.5 rounded-lg bg-white/[0.05] px-3 py-2">
-          <span className="text-[10px] font-semibold text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
-            Assinaturas
+        {/* Tempo restante */}
+        <div className="relative mt-2 flex items-center justify-between">
+          <span className="text-[11px] font-semibold text-white/50" style={{ fontFamily: "'Inter', sans-serif" }}>
+            Tempo restante
           </span>
-          <div className="relative mt-1.5 overflow-hidden rounded-full bg-white/[0.08] h-2">
-            <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-green-400 via-green-500 to-green-400"
-              initial={{ width: "12%" }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
-            />
-            <motion.div
-              className="absolute inset-0 -translate-x-full rounded-full bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              animate={{ translateX: ["-100%", "200%"] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
+          <span className="text-[11px] font-bold text-[#FF6B35]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+            {timeLeft}
+          </span>
         </div>
       </div>
     </motion.a>
   );
 }
 
+/* ── Componente Principal ── */
 export default function Home() {
-  const visitCount = useVisitCounter();
+  const count = useVisitCounter();
 
   return (
-    <div className="relative h-[100dvh] w-full overflow-hidden bg-[#0a0a0a]">
-      {/* Background Glows */}
-      <div className="pointer-events-none absolute inset-0">
-        <motion.div
-          className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-[#FF6B35]"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: [0, 0.06, 0.04], scale: [0.5, 1.1, 1] }}
-          transition={{ duration: 2, ease: "easeOut" }}
-          style={{ filter: "blur(120px)" }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-0 h-[300px] w-[300px] translate-x-1/3 translate-y-1/3 rounded-full bg-[#FF8C5A]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.03 }}
-          transition={{ duration: 2.5, delay: 0.5 }}
-          style={{ filter: "blur(90px)" }}
-        />
-      </div>
-
+    <div className="relative min-h-screen w-full bg-black overflow-hidden">
+      {/* Background Elements */}
+      <AnimatedBackgroundGrid />
       <FloatingParticles />
 
-      {/* Layout principal - 100dvh */}
+      {/* Gradient orbs */}
+      <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#FF6B35]/20 rounded-full blur-3xl opacity-30 animate-pulse" />
+      <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-[#FF8C5A]/10 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: "1s" }} />
+
+      {/* Conteúdo Principal */}
       <motion.div
-        className="relative z-10 mx-auto flex h-full max-w-md flex-col items-center px-5 py-6 sm:py-8"
-        variants={containerVariants}
         initial="hidden"
         animate="visible"
+        variants={containerVariants}
+        className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-8 sm:px-6 lg:px-8"
       >
-        {/* ── TOPO: Foto grande + Nome ── */}
-        <div className="flex flex-col items-center">
-          {/* Foto de perfil GRANDE */}
-          <motion.div variants={profileVariants} className="mb-3">
-            <div className="relative">
-              {/* Glow pulsante */}
-              <motion.div
-                className="absolute -inset-3 rounded-full bg-gradient-to-tr from-[#FF6B35] via-[#FF8C5A] to-[#FF6B35]"
-                animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                style={{ filter: "blur(14px)" }}
+        <div className="w-full max-w-md space-y-8">
+          {/* Profile Section */}
+          <div className="flex flex-col items-center gap-6">
+            {/* Avatar */}
+            <motion.div
+              variants={profileVariants}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] rounded-3xl blur-2xl opacity-40" />
+              <img
+                src="/profile.jpeg"
+                alt="Welington Ribeiro"
+                className="relative h-32 w-32 rounded-3xl object-cover border-2 border-[#FF6B35]/50 shadow-2xl"
               />
-              {/* Ring gradiente girando */}
-              <motion.div
-                className="absolute -inset-[3px] rounded-full bg-gradient-to-tr from-[#FF6B35] via-[#FF8C5A] to-[#FCAF45]"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              />
-              {/* Foto */}
-              <div className="relative h-28 w-28 overflow-hidden rounded-full border-[3px] border-[#0a0a0a] sm:h-32 sm:w-32">
-                <img src="./profile.jpeg" alt="Welington R." className="h-full w-full object-cover" />
+            </motion.div>
+
+            {/* Nome e Título */}
+            <motion.div variants={textVariants} className="text-center space-y-2">
+              <h1 className="text-4xl font-bold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Welington Ribeiro
+              </h1>
+              <p className="text-lg text-[#FF6B35] font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                Privacy Advocate
+              </p>
+            </motion.div>
+
+            {/* Descrição */}
+            <motion.p
+              variants={textVariants}
+              className="text-center text-white/70 text-sm leading-relaxed max-w-sm"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              Especialista em privacidade digital e proteção de dados. Ajudando pessoas a recuperar o controle sobre suas informações pessoais.
+            </motion.p>
+
+            {/* Visit Counter */}
+            <VisitCounterBadge count={count} />
+          </div>
+
+          {/* Links Section */}
+          <motion.div variants={cardVariants} className="space-y-3">
+            {LINKS.length > 0 && (
+              <div className="space-y-3">
+                {LINKS.map((link, index) => (
+                  <motion.a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    custom={index}
+                    variants={cardVariants}
+                    whileHover={{
+                      scale: 1.05,
+                      boxShadow: `0 0 40px ${link.hoverGlow}`,
+                      transition: { duration: 0.3 },
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="group relative flex items-center gap-3 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 backdrop-blur-xl transition-all duration-300 hover:border-white/[0.15] hover:bg-white/[0.08]"
+                  >
+                    {/* Shimmer */}
+                    <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+
+                    {/* Gradiente hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-r ${link.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-[0.08]`} />
+
+                    {/* Ícone */}
+                    <motion.div
+                      className={`relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${link.gradient} text-white shadow-lg`}
+                      whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
+                    >
+                      {link.icon}
+                    </motion.div>
+
+                    {/* Label */}
+                    <h3
+                      className="relative flex-1 text-sm font-semibold text-white/90 transition-colors duration-300 group-hover:text-white"
+                      style={{ fontFamily: "'Poppins', sans-serif" }}
+                    >
+                      {link.label}
+                    </h3>
+
+                    {/* Seta */}
+                    <svg
+                      className="h-4 w-4 text-white/30 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white/60"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </motion.a>
+                ))}
               </div>
-            </div>
+            )}
+
+            {/* Promo Card */}
+            <PromoCard />
           </motion.div>
 
-          {/* Nome */}
-          <motion.h1
-            variants={textVariants}
-            className="mb-0.5 text-center text-xl font-bold tracking-tight text-white sm:text-2xl"
-            style={{ fontFamily: "'Poppins', sans-serif" }}
-          >
-            Welington R.
-          </motion.h1>
-
-          {/* Bio */}
-          <motion.p
-            variants={textVariants}
-            className="text-center text-xs text-white/40"
-            style={{ fontFamily: "'Inter', sans-serif" }}
-          >
-            Fitness &bull; Lifestyle &bull; Conteúdo
-          </motion.p>
-
-          {/* Contador de visitas */}
-          <div className="mt-2">
-            <VisitCounterBadge count={visitCount} />
-          </div>
-        </div>
-
-        {/* ── MEIO: Privacy GRANDE + Links ── */}
-        <div className="flex w-full flex-1 flex-col justify-start gap-2.5 pt-5">
-
-          {/* TELEGRAM VIP - Card GRANDE e chamativo */}
-          <motion.a
-            href="https://t.me/welvip_bot"
-            target="_blank"
-            rel="noopener noreferrer"
-            variants={telegramVariants}
-            whileHover={{
-              scale: 1.03,
-              boxShadow: "0 0 60px rgba(0, 136, 204, 0.45)",
-              transition: { duration: 0.3 },
-            }}
-            whileTap={{ scale: 0.97 }}
-            className="group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-[#0088CC]/40 bg-gradient-to-br from-[#0088CC]/[0.15] via-[#1DA1F2]/[0.08] to-[#0088CC]/[0.03] px-6 py-7 backdrop-blur-sm transition-all duration-300 hover:border-[#0088CC]/60"
-          >
-            {/* Shimmer */}
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#0088CC]/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-
-            {/* Glow pulsante de fundo */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-[#0088CC]/[0.1] to-transparent"
-              animate={{ opacity: [0.4, 0.8, 0.4] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Linha superior decorativa */}
-            <motion.div
-              className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#0088CC] to-transparent"
-              animate={{ opacity: [0.4, 0.8, 0.4] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            {/* Badge VIP - Posicionado no topo */}
-            <motion.div
-              className="relative -mt-2 flex items-center gap-1.5 rounded-full bg-[#0088CC]/25 px-3 py-1"
-            >
-              <span className="text-lg">😈</span>
-              <span className="text-[11px] font-bold tracking-wider text-[#0088CC]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                WELL VIP MEMBERS
-              </span>
-              <span className="text-lg">🔥</span>
-            </motion.div>
-
-            {/* Ícone grande + Título */}
-            <div className="relative flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0088CC] to-[#1DA1F2] text-white shadow-lg shadow-[#0088CC]/30">
-                <Send className="h-6 w-6" />
-              </div>
-              <div>
-                <h3
-                  className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-[#0088CC]"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  Acesse o Grupo VIP
-                </h3>
-                <p className="text-[11px] text-white/45" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  Conteúdo exclusivo e atualizado
-                </p>
-              </div>
-            </div>
-
-            {/* Botão CTA */}
-            <motion.div
-              className="relative mt-3 rounded-full bg-gradient-to-r from-[#0088CC] to-[#1DA1F2] px-8 py-3 text-sm font-semibold text-white shadow-lg w-full text-center"
-              style={{ fontFamily: "'Poppins', sans-serif" }}
-              animate={{
-                scale: [1, 1.08, 1],
-                boxShadow: [
-                  "0 0 20px rgba(0, 136, 204, 0.5)",
-                  "0 0 40px rgba(0, 136, 204, 0.8)",
-                  "0 0 20px rgba(0, 136, 204, 0.5)",
-                ],
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              whileHover={{ scale: 1.12 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Entrar no Telegram
-            </motion.div>
-          </motion.a>
-
-          {/* Outros links - compactos */}
-          {LINKS.map((link, index) => (
+          {/* CTA Section */}
+          <motion.div variants={textVariants} className="space-y-3">
             <motion.a
-              key={link.id}
-              href={link.url}
+              href="https://privacy.com.br/@Wellribeiro"
               target="_blank"
               rel="noopener noreferrer"
-              variants={cardVariants}
-              custom={index}
-              whileHover={{
-                scale: 1.04,
-                boxShadow: `0 0 35px ${link.hoverGlow}`,
-                transition: { duration: 0.3 },
-              }}
-              whileTap={{ scale: 0.97 }}
-              className="group relative flex items-center gap-3 overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 backdrop-blur-sm transition-colors duration-300 hover:border-white/[0.15] hover:bg-white/[0.06]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative flex items-center justify-center gap-2 w-full overflow-hidden rounded-xl border border-[#FF6B35]/50 bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-6 py-3 font-semibold text-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-[#FF6B35]/50"
             >
-              {/* Shimmer */}
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/[0.04] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-
-              {/* Gradiente hover */}
-              <div className={`absolute inset-0 bg-gradient-to-r ${link.gradient} opacity-0 transition-opacity duration-500 group-hover:opacity-[0.07]`} />
-
-              {/* Ícone */}
-              <motion.div
-                className={`relative flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${link.gradient} text-white shadow-lg`}
-                whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.5 } }}
-              >
-                {link.icon}
-              </motion.div>
-
-              {/* Label */}
-              <h3
-                className="relative flex-1 text-sm font-semibold text-white/90 transition-colors duration-300 group-hover:text-white"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-              >
-                {link.label}
-              </h3>
-
-              {/* Seta */}
-              <svg
-                className="h-3.5 w-3.5 text-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white/50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-              </svg>
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <Shield className="h-5 w-5" />
+              <span style={{ fontFamily: "'Poppins', sans-serif" }}>Proteja Sua Privacidade</span>
             </motion.a>
-          ))}
 
-          {/* Promo Card (O que o usuário quer remover no final) */}
-          <PromoCard />
+            <motion.a
+              href="https://privacy.com.br/@Wellribeiro"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group relative flex items-center justify-center gap-2 w-full overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.05] px-6 py-3 font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.08]"
+            >
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              <Zap className="h-5 w-5" />
+              <span style={{ fontFamily: "'Poppins', sans-serif" }}>Saiba Mais</span>
+            </motion.a>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div variants={textVariants} className="flex justify-center gap-4">
+            <motion.a
+              href="https://privacy.com.br/@Wellribeiro"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15, rotate: 10 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.05] text-white/70 transition-all duration-300 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 hover:text-[#FF6B35]"
+            >
+              <Heart className="h-5 w-5" />
+            </motion.a>
+            <motion.a
+              href="https://privacy.com.br/@Wellribeiro"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.15, rotate: -10 }}
+              whileTap={{ scale: 0.9 }}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/[0.1] bg-white/[0.05] text-white/70 transition-all duration-300 hover:border-[#FF6B35]/50 hover:bg-[#FF6B35]/10 hover:text-[#FF6B35]"
+            >
+              <Lock className="h-5 w-5" />
+            </motion.a>
+          </motion.div>
+
+          {/* Rodapé */}
+          <motion.p
+            variants={textVariants}
+            className="text-center text-[10px] text-white/20 tracking-widest uppercase"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            &copy; 2025 Welington Ribeiro. Todos os direitos reservados.
+          </motion.p>
         </div>
-
-        {/* ── RODAPÉ: Direitos Reservados ── */}
-        <motion.p
-          variants={textVariants}
-          className="text-[9px] text-white/15 tracking-wide"
-          style={{ fontFamily: "'Inter', sans-serif" }}
-        >
-          &copy; 2025 Welington Ribeiro. Todos os direitos reservados.
-        </motion.p>
       </motion.div>
     </div>
   );
