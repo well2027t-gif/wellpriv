@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Star, Lock, Eye, Flame, Gift } from "lucide-react";
+import { Star, Lock, Eye, Flame, Gift, Send } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 /**
@@ -116,7 +116,7 @@ const textVariants = {
   visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const privacyVariants = {
+const telegramVariants = {
   hidden: { opacity: 0, scale: 0.85, filter: "blur(14px)" },
   visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
@@ -412,83 +412,83 @@ export default function Home() {
         {/* ── MEIO: Privacy GRANDE + Links ── */}
         <div className="flex w-full flex-1 flex-col justify-start gap-2.5 pt-5">
 
-          {/* PRIVACY - Card GRANDE e chamativo */}
+          {/* TELEGRAM VIP - Card GRANDE e chamativo */}
           <motion.a
-            href="https://privacy.com.br/@Wellribeiro"
+            href="https://t.me/welvip_bot"
             target="_blank"
             rel="noopener noreferrer"
-            variants={privacyVariants}
+            variants={telegramVariants}
             whileHover={{
               scale: 1.03,
-              boxShadow: "0 0 60px rgba(255, 107, 53, 0.45)",
+              boxShadow: "0 0 60px rgba(0, 136, 204, 0.45)",
               transition: { duration: 0.3 },
             }}
             whileTap={{ scale: 0.97 }}
-            className="group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-[#FF6B35]/40 bg-gradient-to-br from-[#FF6B35]/[0.15] via-[#FF8C5A]/[0.08] to-[#FF6B35]/[0.03] px-6 py-7 backdrop-blur-sm transition-all duration-300 hover:border-[#FF6B35]/60"
+            className="group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-[#0088CC]/40 bg-gradient-to-br from-[#0088CC]/[0.15] via-[#1DA1F2]/[0.08] to-[#0088CC]/[0.03] px-6 py-7 backdrop-blur-sm transition-all duration-300 hover:border-[#0088CC]/60"
           >
             {/* Shimmer */}
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#FF6B35]/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#0088CC]/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" /}
 
             {/* Glow pulsante de fundo */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-[#FF6B35]/[0.1] to-transparent"
+              className="absolute inset-0 bg-gradient-to-br from-[#0088CC]/[0.1] to-transparent"
               animate={{ opacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            />
+            /}
 
             {/* Linha superior decorativa */}
             <motion.div
-              className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B35] to-transparent"
+              className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#0088CC] to-transparent"
               animate={{ opacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
+            /}
 
-            {/* Badge EXCLUSIVO - Posicionado no topo */}
+            {/* Badge VIP - Posicionado no topo */}
             <motion.div
-              className="relative -mt-2 flex items-center gap-1.5 rounded-full bg-[#FF6B35]/25 px-3 py-1"
+              className="relative -mt-2 flex items-center gap-1.5 rounded-full bg-[#0088CC]/25 px-3 py-1"
             >
-              <Star className="h-3.5 w-3.5 fill-[#FF6B35] text-[#FF6B35]" />
-              <span className="text-[11px] font-bold tracking-wider text-[#FF6B35]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                CONTEÚDO EXCLUSIVO
+              <span className="text-lg">😈</span>
+              <span className="text-[11px] font-bold tracking-wider text-[#0088CC]" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                WELL VIP MEMBERS
               </span>
-              <Star className="h-3.5 w-3.5 fill-[#FF6B35] text-[#FF6B35]" />
+              <span className="text-lg">🔥</span>
             </motion.div>
 
             {/* Ícone grande + Título */}
             <div className="relative flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FF6B35] to-[#FF8C5A] text-white shadow-lg shadow-[#FF6B35]/30">
-                <Lock className="h-6 w-6" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0088CC] to-[#1DA1F2] text-white shadow-lg shadow-[#0088CC]/30">
+                <Send className="h-6 w-6" /}
               </div>
               <div>
                 <h3
-                  className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-[#FF6B35]"
+                  className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-[#0088CC]"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
-                  Acesse Agora
+                  Acesse o Grupo
                 </h3>
                 <p className="text-[11px] text-white/45" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  Conteúdos exclusivos no Privacy
+                  R$ 10 - Acesso VIP no Telegram
                 </p>
               </div>
             </div>
 
             {/* Botão CTA */}
             <motion.div
-              className="relative mt-2 rounded-full bg-gradient-to-r from-[#FF6B35] to-[#FF8C5A] px-8 py-2.5 text-sm font-semibold text-white shadow-lg"
+              className="relative mt-2 rounded-full bg-gradient-to-r from-[#0088CC] to-[#1DA1F2] px-8 py-2.5 text-sm font-semibold text-white shadow-lg"
               style={{ fontFamily: "'Poppins', sans-serif" }}
               animate={{
                 scale: [1, 1.08, 1],
                 boxShadow: [
-                  "0 0 20px rgba(255, 107, 53, 0.5)",
-                  "0 0 40px rgba(255, 107, 53, 0.8)",
-                  "0 0 20px rgba(255, 107, 53, 0.5)",
+                  "0 0 20px rgba(0, 136, 204, 0.5)",
+                  "0 0 40px rgba(0, 136, 204, 0.8)",
+                  "0 0 20px rgba(0, 136, 204, 0.5)",
                 ],
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               whileHover={{ scale: 1.12 }}
               whileTap={{ scale: 0.95 }}
             >
-              Acessar Privacy
+              Entrar no Telegram
             </motion.div>
           </motion.a>
 
