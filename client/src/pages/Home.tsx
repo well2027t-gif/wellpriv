@@ -427,21 +427,21 @@ export default function Home() {
             className="group relative flex flex-col items-center gap-4 overflow-hidden rounded-3xl border border-[#0088CC]/40 bg-gradient-to-br from-[#0088CC]/[0.15] via-[#1DA1F2]/[0.08] to-[#0088CC]/[0.03] px-6 py-7 backdrop-blur-sm transition-all duration-300 hover:border-[#0088CC]/60"
           >
             {/* Shimmer */}
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#0088CC]/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" /}
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-[#0088CC]/[0.1] to-transparent transition-transform duration-700 group-hover:translate-x-full" />
 
             {/* Glow pulsante de fundo */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-br from-[#0088CC]/[0.1] to-transparent"
               animate={{ opacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            /}
+            />
 
             {/* Linha superior decorativa */}
             <motion.div
               className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#0088CC] to-transparent"
               animate={{ opacity: [0.4, 0.8, 0.4] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            /}
+            />
 
             {/* Badge VIP - Posicionado no topo */}
             <motion.div
@@ -457,24 +457,24 @@ export default function Home() {
             {/* Ícone grande + Título */}
             <div className="relative flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0088CC] to-[#1DA1F2] text-white shadow-lg shadow-[#0088CC]/30">
-                <Send className="h-6 w-6" /}
+                <Send className="h-6 w-6" />
               </div>
               <div>
                 <h3
                   className="text-lg font-bold text-white transition-colors duration-300 group-hover:text-[#0088CC]"
                   style={{ fontFamily: "'Poppins', sans-serif" }}
                 >
-                  Acesse o Grupo
+                  Acesse o Grupo VIP
                 </h3>
                 <p className="text-[11px] text-white/45" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  R$ 10 - Acesso VIP no Telegram
+                  Conteúdo exclusivo e atualizado
                 </p>
               </div>
             </div>
 
             {/* Botão CTA */}
             <motion.div
-              className="relative mt-2 rounded-full bg-gradient-to-r from-[#0088CC] to-[#1DA1F2] px-8 py-2.5 text-sm font-semibold text-white shadow-lg"
+              className="relative mt-3 rounded-full bg-gradient-to-r from-[#0088CC] to-[#1DA1F2] px-8 py-3 text-sm font-semibold text-white shadow-lg w-full text-center"
               style={{ fontFamily: "'Poppins', sans-serif" }}
               animate={{
                 scale: [1, 1.08, 1],
@@ -491,15 +491,6 @@ export default function Home() {
               Entrar no Telegram
             </motion.div>
           </motion.a>
-
-          {/* Separador */}
-          <motion.div
-            variants={textVariants}
-            className="mx-auto h-[1px] w-10 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-          />
-
-          {/* Card de Promoção Melhorado */}
-          <PromoCard />
 
           {/* Outros links - compactos */}
           {LINKS.map((link, index) => (
@@ -552,6 +543,9 @@ export default function Home() {
               </svg>
             </motion.a>
           ))}
+
+          {/* Promo Card (O que o usuário quer remover no final) */}
+          <PromoCard />
         </div>
 
         {/* ── RODAPÉ: Direitos Reservados ── */}
