@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { Send, CheckCircle2, ShieldCheck, Zap, CreditCard, MessageCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 
 /**
- * Well Privé - Design Premium Azul
+ * Well Privé - Novo Layout Premium Azul
  */
 
 const COUNTER_API_NAMESPACE = "wellpriv";
@@ -35,12 +35,12 @@ function useVisitCounter() {
 }
 
 function FloatingParticles() {
-  const particles = Array.from({ length: 8 }, (_, i) => ({
+  const particles = Array.from({ length: 12 }, (_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,
-    size: Math.random() * 2 + 0.5,
-    duration: Math.random() * 20 + 15,
+    size: Math.random() * 3 + 1,
+    duration: Math.random() * 20 + 10,
     delay: Math.random() * 5,
   }));
 
@@ -49,11 +49,11 @@ function FloatingParticles() {
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-gradient-to-br from-[#0088CC] to-[#0066AA]"
+          className="absolute rounded-full bg-blue-400/20"
           style={{ width: p.size, height: p.size, left: `${p.x}%`, top: `${p.y}%` }}
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.5, 0.2, 0], y: [0, -100, -200], x: [0, Math.random() * 40 - 20] }}
-          transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ opacity: [0, 0.4, 0.1, 0], y: [0, -150, -300], x: [0, Math.random() * 60 - 30] }}
+          transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
         />
       ))}
     </div>
@@ -62,210 +62,157 @@ function FloatingParticles() {
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.2 } },
 };
 
-const profileVariants = {
-  hidden: { opacity: 0, scale: 0.2, filter: "blur(40px)" },
-  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } },
-};
-
-const textVariants = {
-  hidden: { opacity: 0, y: 25, filter: "blur(10px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.8, filter: "blur(15px)" },
-  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
 export default function Home() {
   const count = useVisitCounter();
 
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-b from-black via-[#001a33] to-black overflow-hidden">
-      {/* Background Effects */}
+    <div className="relative w-full min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30 overflow-x-hidden">
+      {/* Background Elements */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-600/10 blur-[120px] animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-blue-500/10 blur-[120px] animate-pulse" style={{ animationDelay: "2s" }} />
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20" />
+      </div>
+
       <FloatingParticles />
-      
-      {/* Gradient Orbs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#0088CC]/10 rounded-full blur-3xl opacity-40 animate-pulse" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#0066AA]/10 rounded-full blur-3xl opacity-30 animate-pulse" style={{ animationDelay: "1s" }} />
 
-      {/* Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,136,204,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,136,204,0.03)_1px,transparent_1px)] bg-[length:50px_50px] pointer-events-none" />
-
-      {/* Main Content */}
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="relative z-10 flex items-center justify-center w-full min-h-screen px-4 py-6"
+        className="relative z-10 max-w-xl mx-auto px-6 py-12 md:py-20 flex flex-col items-center"
       >
-        <div className="w-full max-w-md space-y-6">
-          {/* Profile Section */}
-          <div className="flex flex-col items-center gap-5">
-            {/* Avatar with Premium Frame */}
-            <motion.div
-              variants={profileVariants}
-              className="relative group"
-            >
-              {/* Outer Glow */}
-              <div className="absolute -inset-1 bg-gradient-to-br from-[#0088CC] via-[#0066AA] to-[#004499] rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              {/* Inner Shadow Frame */}
-              <div className="relative rounded-3xl p-1 bg-gradient-to-br from-[#0088CC]/50 to-[#0066AA]/30 backdrop-blur-xl">
-                <img
-                  src="/profile.jpeg"
-                  alt="Welington R."
-                  className="relative h-32 w-32 rounded-3xl object-cover border-2 border-[#0088CC]/30 shadow-2xl"
-                />
+        {/* Profile Header */}
+        <motion.div variants={itemVariants} className="flex flex-col items-center mb-10">
+          <div className="relative mb-6">
+            <div className="absolute -inset-4 bg-blue-500/20 rounded-full blur-2xl animate-pulse" />
+            <div className="relative p-1 rounded-full bg-gradient-to-tr from-blue-600 via-blue-400 to-cyan-400 shadow-2xl shadow-blue-500/20">
+              <img
+                src="/profile.jpeg"
+                alt="Welington R."
+                className="w-32 h-32 rounded-full object-cover border-4 border-[#020617]"
+              />
+              <div className="absolute bottom-1 right-1 w-8 h-8 bg-blue-500 rounded-full border-4 border-[#020617] flex items-center justify-center">
+                <CheckCircle2 className="w-4 h-4 text-white" />
               </div>
-            </motion.div>
-
-            {/* Name & Bio */}
-            <motion.div variants={textVariants} className="text-center space-y-2">
-              <h1 className="text-4xl font-black text-white tracking-tight" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Welington R.
-              </h1>
-              <p className="text-sm text-[#0088CC]/90 font-semibold tracking-wide" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                FITNESS • LIFESTYLE • CONTEÚDO
-              </p>
-            </motion.div>
-
-            {/* Views Counter */}
-            <motion.div
-              variants={textVariants}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#0088CC]/40 bg-gradient-to-r from-[#0088CC]/15 to-[#0066AA]/10 backdrop-blur-xl shadow-lg hover:border-[#0088CC]/60 transition-all"
-            >
-              <span className="text-xs font-bold text-white/90" style={{ fontFamily: "'Inter', sans-serif" }}>
-                {count === null ? (
-                  <span className="animate-pulse">carregando...</span>
-                ) : (
-                  <span>
-                    👁️ <span className="text-[#0088CC]">{count.toLocaleString("pt-BR")}</span> visualizações
-                  </span>
-                )}
-              </span>
-            </motion.div>
+            </div>
           </div>
+          
+          <h1 className="text-4xl font-bold text-white tracking-tight mb-2">Welington R.</h1>
+          <p className="text-blue-400 font-medium tracking-widest text-sm uppercase mb-4">Fitness • Lifestyle • Conteúdo</p>
+          
+          {count !== null && (
+            <div className="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 backdrop-blur-md flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
+              <span className="text-xs font-semibold text-blue-300">
+                {count.toLocaleString("pt-BR")} visualizações
+              </span>
+            </div>
+          )}
+        </motion.div>
 
-          {/* Telegram VIP Card - Premium */}
-          <motion.a
+        {/* Main CTA - Telegram */}
+        <motion.div variants={itemVariants} className="w-full mb-8">
+          <a
             href="https://t.me/welvip_bot"
             target="_blank"
             rel="noopener noreferrer"
-            variants={cardVariants}
-            whileHover={{
-              scale: 1.02,
-              boxShadow: "0 0 80px rgba(0, 136, 204, 0.5)",
-              transition: { duration: 0.3 },
-            }}
-            whileTap={{ scale: 0.97 }}
-            className="group relative overflow-hidden rounded-3xl border border-[#0088CC]/50 bg-gradient-to-br from-[#0088CC]/20 via-[#0066AA]/10 to-[#004499]/5 px-6 py-8 backdrop-blur-2xl transition-all duration-300 hover:border-[#0088CC]/80 shadow-2xl"
+            className="group relative block w-full p-1 rounded-3xl bg-gradient-to-r from-blue-600 to-cyan-500 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-blue-600/20"
           >
-            {/* Premium Shine Effect */}
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 group-hover:translate-x-full" />
-            
-            {/* Animated Border Glow */}
-            <motion.div
-              className="absolute inset-0 rounded-3xl"
-              animate={{
-                boxShadow: [
-                  "inset 0 0 20px rgba(0, 136, 204, 0.2)",
-                  "inset 0 0 40px rgba(0, 136, 204, 0.4)",
-                  "inset 0 0 20px rgba(0, 136, 204, 0.2)",
-                ],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
-            />
-            
-            {/* Badge */}
-            <motion.div className="relative mb-4 inline-flex items-center gap-1.5 rounded-full bg-[#0088CC]/30 px-3 py-1 border border-[#0088CC]/40">
-              <span className="text-lg">😈</span>
-              <span className="text-[10px] font-bold tracking-widest text-[#0088CC] uppercase" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                VIP Members
-              </span>
-              <span className="text-lg">🔥</span>
-            </motion.div>
-            
-            {/* Content */}
-            <div className="relative space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#0088CC] to-[#0066AA] text-white shadow-xl shadow-[#0088CC]/40">
-                  <Send className="h-6 w-6" />
+            <div className="relative bg-[#020617] rounded-[22px] p-6 flex items-center justify-between overflow-hidden">
+              <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-colors" />
+              
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-600/40">
+                  <Send className="w-7 h-7" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                    Acesse o Grupo VIP
-                  </h3>
-                  <p className="text-xs text-white/50" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    Conteúdo exclusivo e atualizado
-                  </p>
+                  <h3 className="text-xl font-bold text-white mb-1">Grupo VIP Telegram</h3>
+                  <p className="text-slate-400 text-sm">Acesso imediato ao conteúdo exclusivo</p>
                 </div>
               </div>
               
-              {/* CTA Button */}
-              <motion.div
-                className="relative rounded-2xl bg-gradient-to-r from-[#0088CC] to-[#0066AA] px-6 py-3 text-center font-bold text-white shadow-xl w-full"
-                style={{ fontFamily: "'Poppins', sans-serif" }}
-                animate={{
-                  scale: [1, 1.05, 1],
-                  boxShadow: [
-                    "0 0 20px rgba(0, 136, 204, 0.4)",
-                    "0 0 50px rgba(0, 136, 204, 0.8)",
-                    "0 0 20px rgba(0, 136, 204, 0.4)",
-                  ],
-                }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.93 }}
-              >
-                Entrar no Telegram
-              </motion.div>
+              <div className="hidden sm:flex w-10 h-10 rounded-full border border-slate-800 items-center justify-center group-hover:border-blue-500/50 transition-colors">
+                <Zap className="w-5 h-5 text-blue-500" />
+              </div>
             </div>
-          </motion.a>
+          </a>
+        </motion.div>
 
-          {/* Payment Info - Premium */}
-          <motion.div
-            variants={textVariants}
-            className="relative space-y-4 rounded-2xl border border-[#0088CC]/30 bg-gradient-to-br from-[#0088CC]/10 to-[#0066AA]/5 px-6 py-6 backdrop-blur-xl"
-          >
-            {/* Decorative Line */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0088CC]/50 to-transparent" />
-            
-            <div className="text-center space-y-3">
-              <p className="text-xs text-white/70 uppercase tracking-widest font-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                Para ter acesso ao grupo
-              </p>
-              
-              <div className="space-y-1">
-                <p className="text-3xl font-black text-[#0088CC]" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                  R$ 10
-                </p>
-                <p className="text-xs text-white/60" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  via Pix
-                </p>
+        {/* Pricing & Info Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full mb-8">
+          <motion.div variants={itemVariants} className="p-6 rounded-3xl bg-slate-900/50 border border-slate-800 backdrop-blur-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
+                <CreditCard className="w-5 h-5" />
               </div>
-              
-              <div className="pt-2 space-y-1">
-                <p className="text-xs text-[#0088CC]/90 font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  ✅ Acesso liberado automaticamente
-                </p>
-                <p className="text-[9px] text-white/40" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  após confirmação do pagamento
-                </p>
+              <span className="text-sm font-semibold text-slate-300">Valor Único</span>
+            </div>
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl font-bold text-white">R$ 10</span>
+              <span className="text-slate-500 text-sm">/ acesso</span>
+            </div>
+            <p className="mt-2 text-xs text-slate-400">Pagamento via Pix com liberação automática.</p>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="p-6 rounded-3xl bg-slate-900/50 border border-slate-800 backdrop-blur-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400">
+                <ShieldCheck className="w-5 h-5" />
               </div>
+              <span className="text-sm font-semibold text-slate-300">Garantia</span>
             </div>
-            
-            {/* Footer */}
-            <div className="border-t border-white/10 pt-3">
-              <p className="text-[8px] text-white/25 text-center tracking-widest uppercase" style={{ fontFamily: "'Inter', sans-serif" }}>
-                © 2025 Welington R. Todos os direitos reservados.
-              </p>
-            </div>
+            <div className="text-white font-bold text-lg">Privacidade Total</div>
+            <p className="mt-2 text-xs text-slate-400">Ambiente seguro e discreto para membros.</p>
           </motion.div>
         </div>
+
+        {/* Features List */}
+        <motion.div variants={itemVariants} className="w-full space-y-3 mb-12">
+          {[
+            "Conteúdo exclusivo e atualizado diariamente",
+            "Acesso vitalício ao grupo selecionado",
+            "Suporte direto via bot no Telegram",
+            "Comunidade ativa e privada"
+          ].map((feature, i) => (
+            <div key={i} className="flex items-center gap-3 p-4 rounded-2xl bg-slate-900/30 border border-slate-800/50">
+              <CheckCircle2 className="w-5 h-5 text-blue-500 flex-shrink-0" />
+              <span className="text-sm text-slate-300">{feature}</span>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Secondary Link */}
+        <motion.div variants={itemVariants} className="w-full">
+          <a
+            href="https://t.me/welvip_bot"
+            className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-900 transition-all"
+          >
+            <MessageCircle className="w-5 h-5" />
+            <span className="font-medium">Dúvidas? Fale com o suporte</span>
+          </a>
+        </motion.div>
+
+        {/* Footer */}
+        <motion.footer variants={itemVariants} className="mt-20 text-center">
+          <p className="text-xs text-slate-600 uppercase tracking-[0.2em] mb-4">
+            © 2026 Welington R. • Todos os direitos reservados
+          </p>
+          <div className="flex justify-center gap-4">
+            <div className="w-1 h-1 rounded-full bg-slate-800" />
+            <div className="w-1 h-1 rounded-full bg-slate-800" />
+            <div className="w-1 h-1 rounded-full bg-slate-800" />
+          </div>
+        </motion.footer>
       </motion.div>
     </div>
   );
